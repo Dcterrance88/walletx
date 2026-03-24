@@ -1,24 +1,146 @@
-# Compiled class file
+# ===========================
+# Compiled output
+# ===========================
+target/
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
-*.nar
 *.ear
-*.zip
-*.tar.gz
-*.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# ===========================
+# IntelliJ IDEA
+# ===========================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ===========================
+# Net Beans
+# ===========================
+
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ===========================
+# Spring Boot
+# ===========================
+*.log
+logs/
+spring-shell.log
+
+# ===========================
+# Maven
+# ===========================
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ===========================
+# Sistema operativo
+# ===========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===========================
+# Variables de entorno
+# ===========================
+.env
+*.env
+application-local.properties
+application-local.yml
+
+# ===========================
+# Docker
+# ===========================
+docker-compose.override.yml
+
+# ===========================
+# PostgreSQL
+# ===========================
+*.sql.bak
+pgdata/
+postgres-data/
+
+# ===========================
+# RabbitMQ
+# ===========================
+rabbitmq-data/
+rabbitmq.conf.bak
+
+# ===========================
+# Zipkin
+# ===========================
+zipkin-data/
+
+# ===========================
+# Spring Cloud Config Server
+# ===========================
+config-repo/
+*.enc
+
+# ===========================
+# JWT / Seguridad
+# ===========================
+*.pem
+*.key
+*.keystore
+*.jks
+secrets/
+
+# ===========================
+# H2 Database
+# ===========================
+*.db
+*.mv.db
+*.trace.db
+
+# ===========================
+# Temporal FILES
+# ===========================
+*.tmp
+*.bak
+*.swp
+*.orig
+
+# ===========================
+# VS Code
+# ===========================
+.vscode/
+*.code-workspace
+
+# ===========================
+# Eclipse
+# ===========================
+.classpath
+.project
+.settings/
+bin/
+
+# ===========================
+# STS (Spring Tool Suite)
+# ===========================
+.sts4-cache/
+.springBeans
+
+# ===========================
+# Vim / Emacs
+# ===========================
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# ===========================
+# Gradle (por si acaso)
+# ===========================
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
