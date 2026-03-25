@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ============================= -->
-    <!-- Identificación del proyecto   -->
+    <!-- Project identification        -->
     <!-- ============================= -->
     <groupId>com.walletx</groupId>
     <artifactId>walletx</artifactId>
@@ -17,7 +17,7 @@
     <description>Digital wallet system built with Spring Boot microservices</description>
 
     <!-- ============================= -->
-    <!-- Herencia de Spring Boot       -->
+    <!-- Spring Boot inheritance       -->
     <!-- ============================= -->
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,11 +27,11 @@
     </parent>
 
     <!-- ============================= -->
-    <!-- Módulos                       -->
+    <!-- Modules                       -->
     <!-- ============================= -->
     <modules>
         <module>eureka-server</module>
-<!--        <module>config-server</module>-->
+        <module>config-server</module>
 <!--        <module>api-gateway</module>-->
 <!--        <module>auth-service</module>-->
 <!--        <module>account-service</module>-->
@@ -41,7 +41,7 @@
     </modules>
 
     <!-- ============================= -->
-    <!-- Propiedades globales          -->
+    <!-- Global Properties             -->
     <!-- ============================= -->
     <properties>
         <java.version>17</java.version>
@@ -52,7 +52,7 @@
     </properties>
 
     <!-- ============================= -->
-    <!-- Dependencias comunes          -->
+    <!-- Common dependencies           -->
     <!-- ============================= -->
     <dependencies>
         <dependency>
@@ -68,7 +68,7 @@
     </dependencies>
 
     <!-- ============================= -->
-    <!-- Gestión de dependencias       -->
+    <!-- Dependency management         -->
     <!-- ============================= -->
     <dependencyManagement>
         <dependencies>
@@ -83,7 +83,7 @@
     </dependencyManagement>
 
     <!-- ============================= -->
-    <!-- Plugin de build               -->
+    <!-- Build plugin                  -->
     <!-- ============================= -->
     <build>
         <plugins>

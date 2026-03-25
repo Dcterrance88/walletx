@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ============================= -->
-    <!-- Herencia del padre            -->
+    <!-- Father's inheritance          -->
     <!-- ============================= -->
     <parent>
         <groupId>com.walletx</groupId>
@@ -14,14 +14,14 @@
     </parent>
 
     <!-- ============================= -->
-    <!-- Identificación del módulo     -->
+    <!-- Module identification         -->
     <!-- ============================= -->
     <artifactId>eureka-server</artifactId>
     <name>eureka-server</name>
     <description>Service Discovery Server for WalletX</description>
 
     <!-- ============================= -->
-    <!-- Dependencias del módulo       -->
+    <!-- Module dependencies           -->
     <!-- ============================= -->
     <dependencies>
         <dependency>
