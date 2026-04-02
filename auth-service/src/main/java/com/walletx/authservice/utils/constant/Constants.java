@@ -36,6 +36,7 @@ public class Constants {
         public static final String TOKEN_EXPIRED = "error.token.expired";
         public static final String TOKEN_EMPTY = "error.token.empty";
         public static final String TOKEN_REVOKED = "error.token.revoked";
+        public static final String INVALID_TOKEN = "error.token.invalid";
 
         // Error keys - General
         public static final String ACCESS_DENIED = "error.access.denied";
