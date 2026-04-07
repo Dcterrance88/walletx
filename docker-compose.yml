@@ -1,0 +1,26 @@
+services:
+
+  # ================================
+  # Auth Service Database
+  # ================================
+  walletx-auth-db:
+    image: postgres:16-alpine
+    container_name: walletx-auth-db
+    environment:
+      POSTGRES_DB: walletx_auth_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - walletx-auth-data:/var/lib/postgresql/data
+    networks:
+      - walletx-network
+    restart: unless-stopped
+
+volumes:
+  walletx-auth-data:
+
+networks:
+  walletx-network:
+    driver: bridge

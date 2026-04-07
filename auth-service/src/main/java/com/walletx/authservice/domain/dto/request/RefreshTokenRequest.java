@@ -1,4 +1,5 @@
 package com.walletx.authservice.domain.dto.request;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RefreshTokenRequest {
 
-    @NotBlank(message = "Refresh token is required")
+    @NotBlank(message = "{validation.refresh.token.required}")
     private String refreshToken;
 
 }
