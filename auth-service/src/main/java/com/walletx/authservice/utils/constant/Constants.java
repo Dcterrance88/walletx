@@ -11,15 +11,6 @@ public class Constants {
         public static final String TOKEN_TYPE = "Bearer";
     }
 
-    public static final class Validation {
-        private Validation() {}
-
-        public static final int PASSWORD_MIN_LENGTH = 8;
-        public static final int EMAIL_MAX_LENGTH = 100;
-        public static final int NAME_MAX_LENGTH = 150;
-        public static final int PHONE_MAX_LENGTH = 20;
-    }
-
     public static final class MessageKeys {
         private MessageKeys() {}
 
@@ -37,13 +28,5 @@ public class Constants {
         public static final String TOKEN_EMPTY = "error.token.empty";
         public static final String TOKEN_REVOKED = "error.token.revoked";
         public static final String INVALID_TOKEN = "error.token.invalid";
-
-        // Error keys - General
-        public static final String ACCESS_DENIED = "error.access.denied";
-        public static final String UNEXPECTED_ERROR = "error.unexpected";
-
-        // Success keys
-        public static final String USER_REGISTERED = "success.user.registered";
-        public static final String USER_LOGGED_OUT = "success.user.logged.out";
     }
 }

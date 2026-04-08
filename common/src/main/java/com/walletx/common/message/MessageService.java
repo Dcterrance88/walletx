@@ -1,4 +1,4 @@
-package com.walletx.authservice.utils.message;
+package com.walletx.common.message;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;

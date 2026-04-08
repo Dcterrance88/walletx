@@ -1,6 +1,6 @@
 package com.walletx.authservice.rules;
 import com.walletx.authservice.domain.entity.RefreshToken;
-import com.walletx.authservice.exception.WalletXException;
+import com.walletx.common.exception.WalletXException;
 import com.walletx.authservice.repository.RefreshTokenRepository;
 import com.walletx.authservice.utils.constant.Constants;
 import lombok.RequiredArgsConstructor;

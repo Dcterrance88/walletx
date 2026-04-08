@@ -1,7 +1,7 @@
 package com.walletx.authservice.security;
 import com.walletx.authservice.config.security.SecurityConfig;
 import com.walletx.authservice.domain.entity.User;
-import com.walletx.authservice.exception.WalletXException;
+import com.walletx.common.exception.WalletXException;
 import com.walletx.authservice.repository.UserRepository;
 import com.walletx.authservice.utils.constant.Constants;
 import lombok.RequiredArgsConstructor;

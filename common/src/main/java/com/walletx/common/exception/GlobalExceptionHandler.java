@@ -1,14 +1,11 @@
-package com.walletx.authservice.exception;
+package com.walletx.common.exception;
 
-import com.walletx.authservice.utils.message.MessageService;
+import com.walletx.common.message.MessageService;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -17,18 +14,17 @@ import org.springframework.web.context.request.WebRequest;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
-import static com.walletx.authservice.utils.constant.Constants.MessageKeys.*;
+import static com.walletx.common.exception.MessageKeys.UNEXPECTED_ERROR;
 
 /**
- * Global exception handler for all REST controllers in the WalletX auth service.
+ * Global exception handler for all REST controllers in WalletX microservices.
  *
- * <p>Intercepts exceptions thrown during request processing and returns structured
- * {@link ApiErrorResponse} objects. Separates developer-facing messages (technical details)
- * from user-facing messages (internationalized via {@link MessageService}).</p>
+ * <p>Handles generic exceptions applicable to any microservice. Security-specific
+ * exceptions (e.g. {@code BadCredentialsException}) are handled per-service
+ * in their own {@code @RestControllerAdvice}.</p>
  *
  * <p>Note: This handler operates at the Spring MVC layer — it does not intercept
- * exceptions thrown at the filter level. For filter-level authentication errors,
- * see {@link com.walletx.authservice.security.JwtAuthenticationEntryPoint}.</p>
+ * exceptions thrown at the filter level.</p>
  *
  * @see ApiErrorResponse
  * @see WalletXException
@@ -66,79 +62,10 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles authentication failures caused by invalid email or password.
-     *
-     * <p>Triggered by Spring Security when credentials do not match.
-     * Returns a generic message to avoid exposing whether the email
-     * or password was incorrect — a security best practice.</p>
-     *
-     * @param exception the bad credentials exception
-     * @param request   the current web request
-     * @return a 401 Unauthorized error response
-     */
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ApiErrorResponse> handleBadCredentials(
-            BadCredentialsException exception, WebRequest request) {
-
-        log.warn("Bad credentials attempt: path={}", request.getDescription(false));
-
-        return buildResponse(
-                HttpStatus.UNAUTHORIZED,
-                INVALID_CREDENTIALS,
-                messageService.getMessage(INVALID_CREDENTIALS),
-                request
-        );
-    }
-
-    /**
-     * Handles cases where the user is not found during authentication.
-     *
-     * @param exception the username not found exception
-     * @param request   the current web request
-     * @return a 401 Unauthorized error response
-     */
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleUsernameNotFound(
-            UsernameNotFoundException exception, WebRequest request) {
-
-        log.warn("User not found during authentication: {}", exception.getMessage());
-
-        return buildResponse(
-                HttpStatus.UNAUTHORIZED,
-                USER_NOT_FOUND,
-                messageService.getMessage(USER_NOT_FOUND),
-                request
-        );
-    }
-
-    /**
-     * Handles authorization failures when an authenticated user attempts
-     * to access a resource they do not have permission for.
-     *
-     * @param exception the access denied exception
-     * @param request   the current web request
-     * @return a 403 Forbidden error response
-     */
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApiErrorResponse> handleAccessDenied(
-            AccessDeniedException exception, WebRequest request) {
-
-        log.warn("Access denied: path={}", request.getDescription(false));
-
-        return buildResponse(
-                HttpStatus.FORBIDDEN,
-                ACCESS_DENIED,
-                messageService.getMessage(ACCESS_DENIED),
-                request
-        );
-    }
-
-    /**
      * Handles validation errors for request bodies annotated with {@code @Valid}.
      *
      * <p>Collects all field-level validation errors and joins them into a single
-     * user-friendly message. The developer-facing message contains the raw
-     * exception details for debugging.</p>
+     * user-friendly message.</p>
      *
      * @param exception the validation exception containing field errors
      * @param request   the current web request
@@ -166,9 +93,6 @@ public class GlobalExceptionHandler {
      * Handles constraint violations on method-level parameters such as
      * {@code @RequestParam} and {@code @PathVariable}.
      *
-     * <p>Collects all violated constraints and joins them into a single
-     * user-friendly message.</p>
-     *
      * @param exception the constraint violation exception
      * @param request   the current web request
      * @return a 400 Bad Request error response with constraint violation details
@@ -195,8 +119,7 @@ public class GlobalExceptionHandler {
      * Handles any unexpected exception not covered by the other handlers.
      *
      * <p>Acts as a safety net — logs the technical details internally while
-     * returning a generic message to the user to avoid exposing
-     * sensitive system information.</p>
+     * returning a generic message to avoid exposing sensitive system information.</p>
      *
      * @param exception the unexpected exception
      * @param request   the current web request
@@ -218,9 +141,6 @@ public class GlobalExceptionHandler {
 
     /**
      * Builds a structured {@link ApiErrorResponse} and wraps it in a {@link ResponseEntity}.
-     *
-     * <p>Used internally by all exception handlers to ensure a consistent
-     * response format across the entire service.</p>
      *
      * @param status      the HTTP status to return
      * @param code        the technical error code or message key
