@@ -10,7 +10,7 @@ import com.walletx.authservice.domain.entity.Role;
 import com.walletx.authservice.domain.entity.User;
 import com.walletx.authservice.domain.enums.RoleType;
 import com.walletx.authservice.domain.mapper.UserMapper;
-import com.walletx.authservice.exception.WalletXException;
+import com.walletx.common.exception.WalletXException;
 import com.walletx.authservice.repository.RefreshTokenRepository;
 import com.walletx.authservice.repository.UserRepository;
 import com.walletx.authservice.rules.RefreshTokenRules;

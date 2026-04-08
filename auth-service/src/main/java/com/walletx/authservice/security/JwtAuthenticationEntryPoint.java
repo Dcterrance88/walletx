@@ -2,8 +2,7 @@ package com.walletx.authservice.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walletx.authservice.config.security.SecurityConfig;
-import com.walletx.authservice.exception.ApiErrorResponse;
-import com.walletx.authservice.exception.GlobalExceptionHandler;
+import com.walletx.common.exception.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ import java.time.LocalDateTime;
  * Entry point for handling unauthorized access attempts in the WalletX application.
  *
  * <p>Invoked by Spring Security when an unauthenticated request attempts to access
- * a protected resource. Unlike {@link GlobalExceptionHandler}, this component
+ * a protected resource. Unlike GlobalExceptionHandler, this component
  * operates at the filter level - before the request reaches the controller layer -
  * so it writes the error response directly to the {@link HttpServletResponse}.</p>
  *

@@ -22,7 +22,6 @@ import java.util.Locale;
  *     <li>{@code es} - Spanish</li>
  * </ul>
  *
- * @see com.walletx.authservice.utils.message.MessageService
  */
 @Configuration
 public class MessageConfig {

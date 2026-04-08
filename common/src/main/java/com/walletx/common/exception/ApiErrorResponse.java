@@ -1,4 +1,4 @@
-package com.walletx.authservice.exception;
+package com.walletx.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.walletx.authservice.security;
 
-import com.walletx.authservice.exception.WalletXException;
+import com.walletx.common.exception.WalletXException;
 import com.walletx.authservice.utils.constant.Constants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

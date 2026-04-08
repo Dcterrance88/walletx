@@ -3,7 +3,7 @@ package com.walletx.authservice.rules;
 import com.walletx.authservice.domain.entity.Role;
 import com.walletx.authservice.domain.entity.User;
 import com.walletx.authservice.domain.enums.RoleType;
-import com.walletx.authservice.exception.WalletXException;
+import com.walletx.common.exception.WalletXException;
 import com.walletx.authservice.repository.RoleRepository;
 import com.walletx.authservice.repository.UserRepository;
 import com.walletx.authservice.utils.constant.Constants;
