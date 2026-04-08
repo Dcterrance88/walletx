@@ -1,0 +1,55 @@
+### Create User
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "fullName": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "Password123!",
+    "phoneNumber": "+573001234567"
+}
+
+### Loging
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "john.doe@example.com",
+    "password": "Password123!"
+}
+
+
+### Get Profile
+GET http://localhost:8080/api/v1/auth/users/me
+Authorization: Bearer {{access_token}}
+
+### Refresh Token
+POST http://localhost:8080/api/v1/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "{{refresh_token}}"
+}
+
+### Logout
+POST http://localhost:8080/api/v1/auth/logout
+Authorization: Bearer {{access_token}}
+
+
+### {
+###    "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImlhdCI6MTc3NTU5NTY5MywiZXhwIjoxNzc1NjgyMDkzfQ.U4XYXrMp_a4Z5xsXJ-BWv8CDvbdkSBv64rH-AYRdVih4uCgxAoM6Z70ckJp7Xj7C",
+###    "refreshToken": "8938b173-98ae-4a61-a37d-6a9b487430d0",
+###    "tokenType": "Bearer",
+###    "expiresIn": 604800000,
+###    "user": {
+###        "id": 1,
+###        "email": "john.doe@example.com",
+###        "fullName": "John Doe",
+###        "phoneNumber": "+573001234567",
+###        "isActive": true,
+###        "roles": [
+###            "ROLE_USER"
+###        ],
+###        "createdAt": "2026-04-07T16:01:33.1831363"
+###    }
+### }
