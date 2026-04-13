@@ -35,7 +35,7 @@
         <module>api-gateway</module>
         <module>auth-service</module>
         <module>common</module>
-<!--        <module>account-service</module>-->
+        <module>account-service</module>
 <!--        <module>transaction-service</module>-->
 <!--        <module>notification-service</module>-->
 <!--        <module>fraud-detection-service</module>-->
