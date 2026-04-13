@@ -1,0 +1,34 @@
+### Create Account
+POST http://localhost:8080/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc2MTE1MjgzLCJleHAiOjE3NzYyMDE2ODN9.8ntyq5WuDRIq5XOgg7zdhMUMwsx1yysyYz5Q07TFU-UEUVMBzw2XkniaSftmpW7M
+
+{
+    "currency": "COP"
+}
+
+### Get My Account
+GET http://localhost:8080/api/v1/accounts/me
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc2MTE1MjgzLCJleHAiOjE3NzYyMDE2ODN9.8ntyq5WuDRIq5XOgg7zdhMUMwsx1yysyYz5Q07TFU-UEUVMBzw2XkniaSftmpW7M
+
+### Deposit
+POST http://localhost:8080/api/v1/accounts/me/deposit
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc2MTE1MjgzLCJleHAiOjE3NzYyMDE2ODN9.8ntyq5WuDRIq5XOgg7zdhMUMwsx1yysyYz5Q07TFU-UEUVMBzw2XkniaSftmpW7M
+
+{
+    "amount": 500000.00
+}
+
+### Update My Status
+PUT http://localhost:8080/api/v1/accounts/me/status
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc2MTE1MjgzLCJleHAiOjE3NzYyMDE2ODN9.8ntyq5WuDRIq5XOgg7zdhMUMwsx1yysyYz5Q07TFU-UEUVMBzw2XkniaSftmpW7M
+
+{
+    "status": "FROZEN"
+}
+
+### Get All Accounts (Admin)
+GET http://localhost:8080/api/v1/accounts
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc2MTE1MjgzLCJleHAiOjE3NzYyMDE2ODN9.8ntyq5WuDRIq5XOgg7zdhMUMwsx1yysyYz5Q07TFU-UEUVMBzw2XkniaSftmpW7M
