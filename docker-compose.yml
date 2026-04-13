@@ -18,8 +18,27 @@ services:
       - walletx-network
     restart: unless-stopped
 
+  # ================================
+  # Account Service Database
+  # ================================
+  walletx-account-db:
+    image: postgres:16-alpine
+    container_name: walletx-account-db
+    environment:
+      POSTGRES_DB: walletx_account_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - walletx-account-data:/var/lib/postgresql/data
+    networks:
+      - walletx-network
+    restart: unless-stopped
+
 volumes:
   walletx-auth-data:
+  walletx-account-data:
 
 networks:
   walletx-network:
