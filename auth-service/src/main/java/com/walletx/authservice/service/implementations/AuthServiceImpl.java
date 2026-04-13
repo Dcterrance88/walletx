@@ -28,6 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -146,7 +148,10 @@ public class AuthServiceImpl implements AuthService {
                         .toArray(String[]::new))
                 .build();
 
-        String accessToken = jwtTokenService.generateAccessToken(userDetails);
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("userId", user.getId());
+
+        String accessToken = jwtTokenService.generateAccessToken(extraClaims, userDetails);
         RefreshToken refreshToken = createRefreshToken(user);
 
         return AuthResponse.builder()
