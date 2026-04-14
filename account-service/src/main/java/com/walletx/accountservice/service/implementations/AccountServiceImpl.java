@@ -9,6 +9,7 @@ import com.walletx.accountservice.domain.mapper.AccountMapper;
 import com.walletx.accountservice.repository.AccountRepository;
 import com.walletx.accountservice.rules.AccountRules;
 import com.walletx.accountservice.service.interfaces.AccountService;
+import com.walletx.accountservice.utils.generator.AccountNumberGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,18 +26,19 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final AccountRules accountRules;
     private final AccountMapper accountMapper;
+    private final AccountNumberGenerator accountNumberGenerator;
 
     @Override
     @Transactional
     public AccountResponse createAccount(Long userId, CreateAccountRequest request) {
-        log.info("Creating account for userId: {}", userId);
+        log.info("Create account request received for userId: {}", userId);
 
         accountRules.validateAccountDoesNotExist(userId);
 
         Account account = Account.builder()
                 .userId(userId)
                 .currency(request.getCurrency())
-                .accountNumber(generateAccountNumber())
+                .accountNumber(accountNumberGenerator.generate(accountRepository::existsByAccountNumber))
                 .build();
 
         Account saved = accountRepository.save(account);
@@ -58,10 +60,11 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRules.findByUserIdOrThrow(userId);
         accountRules.validateStatusTransition(account, request.getStatus());
 
-        log.info("Updating status for account: {} to {}", account.getAccountNumber(), request.getStatus());
-
         account.setStatus(request.getStatus());
-        return accountMapper.toResponse(accountRepository.save(account));
+        Account saved = accountRepository.save(account);
+        log.info("Status updated to {} for account: {}", saved.getStatus(), saved.getAccountNumber());
+
+        return accountMapper.toResponse(saved);
     }
 
     @Override
@@ -72,10 +75,11 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRules.findByUserIdOrThrow(userId);
         accountRules.validateAccountIsActive(account);
 
-        log.info("Depositing {} to account: {}", request.getAmount(), account.getAccountNumber());
-
         account.setBalance(account.getBalance().add(request.getAmount()));
-        return accountMapper.toResponse(accountRepository.save(account));
+        Account saved = accountRepository.save(account);
+        log.info("Deposit of {} completed for account: {}", request.getAmount(), saved.getAccountNumber());
+
+        return accountMapper.toResponse(saved);
     }
 
     @Override
@@ -100,10 +104,11 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRules.findByIdOrThrow(accountId);
         accountRules.validateStatusTransition(account, request.getStatus());
 
-        log.info("Admin updating status for account: {} to {}", account.getAccountNumber(), request.getStatus());
-
         account.setStatus(request.getStatus());
-        return accountMapper.toResponse(accountRepository.save(account));
+        Account saved = accountRepository.save(account);
+        log.info("Admin updated status to {} for account: {}", saved.getStatus(), saved.getAccountNumber());
+
+        return accountMapper.toResponse(saved);
     }
 
     @Override
@@ -125,19 +130,11 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRules.findByAccountNumberOrThrow(accountNumber);
         accountRules.validateAccountIsActive(account);
 
-        log.info("Updating balance for account: {} by amount: {}", accountNumber, amount);
-
         account.setBalance(account.getBalance().add(amount));
-        return accountMapper.toResponse(accountRepository.save(account));
-    }
+        Account saved = accountRepository.save(account);
+        log.info("Balance updated by {} for account: {}", amount, saved.getAccountNumber());
 
-    private String generateAccountNumber() {
-        String accountNumber;
-        do {
-            long number = (long) (Math.random() * 9_000_000L) + 1_000_000L;
-            accountNumber = "WLT-" + number;
-        } while (accountRepository.existsByAccountNumber(accountNumber));
-        return accountNumber;
+        return accountMapper.toResponse(saved);
     }
 
 }
