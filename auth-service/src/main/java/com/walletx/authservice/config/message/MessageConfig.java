@@ -13,7 +13,7 @@ import java.util.Locale;
  * Configuration for internationalization (i18n) message resolution.
  *
  * <p>Sets up the {@link MessageSource} to load messages from property files
- * localed in {@code src/main/resources/i18n/}. the locale is determined
+ * located in {@code src/main/resources/i18n/}. The locale is determined
  * per request using the {@code Accept-Language} HTTP header.</p>
  *
  * <p>Supported locales:</p>
@@ -21,7 +21,6 @@ import java.util.Locale;
  *     <li>{@code en} - English (default)</li>
  *     <li>{@code es} - Spanish</li>
  * </ul>
- *
  */
 @Configuration
 public class MessageConfig {
@@ -35,6 +34,10 @@ public class MessageConfig {
      *   <li>{@code i18n/messages_es.properties} — Spanish</li>
      * </ul>
      *
+     * <p>{@code setDefaultLocale} is set to {@link Locale#ENGLISH} to ensure that
+     * when the JVM default locale is not English, the fallback still resolves to
+     * the English message bundle instead of the system locale.</p>
+     *
      * <p>{@code useCodeAsDefaultMessage} is set to {@code true} so that if a message
      * key is not found, the key itself is returned instead of throwing an exception —
      * useful during development to identify missing translations.</p>
@@ -47,6 +50,7 @@ public class MessageConfig {
         messageSource.setBasenames("i18n/messages", "ValidationMessages");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setUseCodeAsDefaultMessage(true);
+        messageSource.setDefaultLocale(Locale.ENGLISH);
         return messageSource;
     }
 

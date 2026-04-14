@@ -20,9 +20,10 @@ import java.time.LocalDateTime;
  * Entry point for handling unauthorized access attempts in the WalletX application.
  *
  * <p>Invoked by Spring Security when an unauthenticated request attempts to access
- * a protected resource. Unlike GlobalExceptionHandler, this component
- * operates at the filter level - before the request reaches the controller layer -
- * so it writes the error response directly to the {@link HttpServletResponse}.</p>
+ * a protected resource. Unlike {@link com.walletx.common.exception.GlobalExceptionHandler},
+ * this component operates at the filter level — before the request reaches the
+ * controller layer — so it writes the error response directly to the
+ * {@link HttpServletResponse}.</p>
  *
  * @see JwtAuthenticationFilter
  * @see SecurityConfig
@@ -42,7 +43,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
      * Handles unauthorized access by returning a structured JSON error response.
      *
      * <p>This method is triggered when a request arrives without valid authentication
-     * credentials. It bypassed the standard Spring MVC exception handling and writes
+     * credentials. It bypasses the standard Spring MVC exception handling and writes
      * the {@link ApiErrorResponse} directly to the response output stream.</p>
      *
      * @param request       the incoming HTTP request that triggered the authentication failure
@@ -59,8 +60,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .code(HttpStatus.UNAUTHORIZED.toString())
-                .message(authException.getMessage())
-                .userMessage("Authentication required to access this resource")
+                .userMessage(authException.getMessage())
                 .path(request.getRequestURI())
                 .timestamp(LocalDateTime.now())
                 .build();
