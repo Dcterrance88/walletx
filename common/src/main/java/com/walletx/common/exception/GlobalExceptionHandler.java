@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static com.walletx.common.exception.MessageKeys.UNEXPECTED_ERROR;
@@ -53,12 +55,13 @@ public class GlobalExceptionHandler {
 
         log.warn("Business exception: status={}, key={}", exception.getStatus(), exception.getMessageKey());
 
-        return buildResponse(
-                exception.getStatus(),
-                exception.getMessageKey(),
-                messageService.getMessage(exception.getMessageKey()),
-                request
-        );
+        Locale locale = request instanceof ServletWebRequest servletWebRequest
+                ? servletWebRequest.getRequest().getLocale()
+                : Locale.ENGLISH;
+
+        String userMessage = messageService.getMessage(exception.getMessageKey(), locale);
+
+        return buildResponse(exception.getStatus(), userMessage, request);
     }
 
     /**
@@ -81,12 +84,7 @@ public class GlobalExceptionHandler {
 
         log.warn("Validation error: path={}, fields={}", request.getDescription(false), userMessage);
 
-        return buildResponse(
-                HttpStatus.BAD_REQUEST,
-                exception.getMessage(),
-                userMessage,
-                request
-        );
+        return buildResponse(HttpStatus.BAD_REQUEST, userMessage, request);
     }
 
     /**
@@ -107,12 +105,7 @@ public class GlobalExceptionHandler {
 
         log.warn("Constraint violation: path={}, violations={}", request.getDescription(false), userMessage);
 
-        return buildResponse(
-                HttpStatus.BAD_REQUEST,
-                exception.getMessage(),
-                userMessage,
-                request
-        );
+        return buildResponse(HttpStatus.BAD_REQUEST, userMessage, request);
     }
 
     /**
@@ -133,7 +126,6 @@ public class GlobalExceptionHandler {
 
         return buildResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR,
-                exception.getMessage(),
                 messageService.getMessage(UNEXPECTED_ERROR),
                 request
         );
@@ -143,17 +135,15 @@ public class GlobalExceptionHandler {
      * Builds a structured {@link ApiErrorResponse} and wraps it in a {@link ResponseEntity}.
      *
      * @param status      the HTTP status to return
-     * @param code        the technical error code or message key
      * @param userMessage the internationalized user-facing error message
      * @param request     the current web request used to extract the request path
      * @return a {@link ResponseEntity} containing the structured error response
      */
     private ResponseEntity<ApiErrorResponse> buildResponse(
-            HttpStatus status, String code, String userMessage, WebRequest request) {
+            HttpStatus status, String userMessage, WebRequest request) {
 
         ApiErrorResponse response = ApiErrorResponse.builder()
                 .code(status.toString())
-                .message(code)
                 .userMessage(userMessage)
                 .path(request.getDescription(false))
                 .timestamp(LocalDateTime.now())

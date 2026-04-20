@@ -1,0 +1,69 @@
+### Create Account
+POST {{baseUrl}}/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "currency": "COP"
+}
+
+### Get My Account
+GET {{baseUrl}}/api/v1/accounts/me
+Authorization: Bearer {{accessToken}}
+
+### Deposit - English Direct
+POST http://localhost:8082/api/v1/accounts/me/deposit
+Content-Type: application/json
+X-User-Id: 1
+Accept-Language: en
+
+{
+    "amount": 500000.00
+}
+
+### Update My Status - FROZEN
+PUT {{baseUrl}}/api/v1/accounts/me/status
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "status": "FROZEN"
+}
+
+### Update My Status - ACTIVE
+PUT {{baseUrl}}/api/v1/accounts/me/status
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "status": "ACTIVE"
+}
+
+### Get All Accounts (Admin)
+GET {{baseUrl}}/api/v1/accounts
+Authorization: Bearer {{accessToken}}
+
+### Get Account By Id (Admin)
+GET {{baseUrl}}/api/v1/accounts/1
+Authorization: Bearer {{accessToken}}
+
+### Update Account Status (Admin)
+PUT {{baseUrl}}/api/v1/accounts/1/status
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "status": "FROZEN"
+}
+
+### Get Account By Account Number (Internal)
+GET {{baseUrl}}/api/v1/accounts/internal/WLT-7383992
+Authorization: Bearer {{accessToken}}
+
+### Exists By Account Number (Internal)
+GET {{baseUrl}}/api/v1/accounts/internal/exists/WLT-7383992
+Authorization: Bearer {{accessToken}}
+
+### Update Balance (Internal)
+PUT {{baseUrl}}/api/v1/accounts/internal/WLT-7383992/balance?amount=100000
+Authorization: Bearer {{accessToken}}

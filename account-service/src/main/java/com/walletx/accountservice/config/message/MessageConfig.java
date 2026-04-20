@@ -1,10 +1,13 @@
-package com.walletx.authservice.config.message;
+package com.walletx.accountservice.config.message;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +26,7 @@ import java.util.Locale;
  * </ul>
  */
 @Configuration
-public class MessageConfig {
+public class MessageConfig implements WebMvcConfigurer {
 
     /**
      * Configures the {@link MessageSource} bean for loading i18n message bundles.
@@ -44,7 +47,7 @@ public class MessageConfig {
      *
      * @return a configured {@link ResourceBundleMessageSource}
      */
-    @Bean
+    @Bean(name = "messageSource")
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("i18n/messages", "ValidationMessages");
@@ -72,6 +75,30 @@ public class MessageConfig {
                 new Locale("es")
         ));
         return resolver;
+    }
+
+    /**
+     * Configures the interceptor that detects locale change requests.
+     *
+     * <p>Works in conjunction with {@link #addInterceptors(InterceptorRegistry)}
+     * to ensure the locale is properly resolved and set in the request context
+     * before message resolution occurs.</p>
+     *
+     * @return a configured {@link LocaleChangeInterceptor}
+     */
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        return new LocaleChangeInterceptor();
+    }
+
+    /**
+     * Registers the {@link LocaleChangeInterceptor} in the Spring MVC interceptor chain.
+     *
+     * @param registry the interceptor registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
     }
 
 }
